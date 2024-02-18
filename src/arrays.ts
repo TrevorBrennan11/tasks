@@ -5,7 +5,16 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    let newNumbers: number[];
+    if (numbers.length === 0) {
+        return numbers;
+    } else if (numbers.length === 1) {
+        newNumbers = [...numbers, ...numbers];
+        return newNumbers;
+    } else {
+        newNumbers = [numbers[0], numbers[numbers.length - 1]];
+        return newNumbers;
+    }
 }
 
 /**
@@ -13,7 +22,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const newNumbers = numbers.map((value: number): number => value * 3);
+    return newNumbers;
 }
 
 /**
@@ -21,7 +31,10 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const newNumbers = numbers.map((value: string): number =>
+        isNaN(Number(value)) ? 0 : Number(value)
+    );
+    return newNumbers;
 }
 
 /**
@@ -32,7 +45,12 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    const newAmounts = stringsToIntegers(
+        amounts.map((amount: string): string =>
+            amount.charAt(0) === "$" ? amount.substring(1) : amount
+        )
+    );
+    return newAmounts;
 };
 
 /**
@@ -41,7 +59,17 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const newMessages = messages
+        .map((message: string): string =>
+            message.charAt(message.length - 1) === "!"
+                ? message.toUpperCase()
+                : message
+        )
+        .filter(
+            (message: string): boolean =>
+                message.charAt(message.length - 1) !== "?"
+        );
+    return newMessages;
 };
 
 /**
@@ -49,7 +77,7 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    return words.filter((word: string): boolean => word.length < 4).length;
 }
 
 /**
@@ -58,7 +86,14 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    if (colors.length === 0) {
+        return true;
+    } else {
+        return colors.every(
+            (color: string): boolean =>
+                color === "red" || color === "green" || color === "blue"
+        );
+    }
 }
 
 /**
@@ -69,7 +104,11 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    const sum = addends.reduce(
+        (currentTotal: number, num: number) => currentTotal + num,
+        0
+    );
+    return sum + "=" + (addends.length === 0 ? 0 : addends.join("+"));
 }
 
 /**
@@ -82,5 +121,33 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    const newValues = [...values];
+    if (values.findIndex((value: number): boolean => value < 0) === -1) {
+        //case1
+        newValues.splice(
+            values.length,
+            0,
+            values.reduce(
+                (currentTotal: number, num: number) => currentTotal + num,
+                0
+            )
+        );
+        return newValues;
+    } else {
+        //case2
+        newValues.splice(
+            values.findIndex((value: number): boolean => value < 0) + 1,
+            0,
+            values
+                .slice(
+                    0,
+                    values.findIndex((value: number): boolean => value < 0)
+                )
+                .reduce(
+                    (currentTotal: number, num: number) => currentTotal + num,
+                    0
+                )
+        );
+        return newValues;
+    }
 }
