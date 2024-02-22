@@ -1,7 +1,7 @@
-import { text } from "stream/consumers";
+//
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-import { addOption, duplicateQuestion, makeBlankQuestion } from "./objects";
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 
 /**
  * Helper function that creates a deep copy of an array of questions
