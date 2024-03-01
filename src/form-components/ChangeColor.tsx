@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Form, Row } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 export function ChangeColor(): JSX.Element {
     const COLORS = [
